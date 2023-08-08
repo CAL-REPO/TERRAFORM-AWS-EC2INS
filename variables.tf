@@ -23,12 +23,14 @@ variable "INSs" {
 
 variable "INS_UDs" {
     type = object({
-        FILE = list(list(string))
-        SCRIPT = list(string)
+        SCRIPT = optional(list(string))
+        FILEs = optional(list(list(string)))
+        SCRIPT = optional(list(string))
     })
 
     default = {
-        FILE = []
+        SCRIPT = []
+        FILEs = []
         SCRIPT = []
     }
 }
