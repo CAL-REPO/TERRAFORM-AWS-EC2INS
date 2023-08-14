@@ -67,8 +67,8 @@ data "template_file" "EC2_USER_DATA" {
             length(var.INSs) : 0)
 
     vars {
-        NEW_USER_NAME=ops
-        NEW_USER_PW=qwe123
+        NEW_USER_NAME="ops"
+        NEW_USER_PW="qwe123"
     }
 
     template = <<-EOF
