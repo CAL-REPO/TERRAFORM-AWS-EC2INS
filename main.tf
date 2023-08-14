@@ -66,6 +66,11 @@ data "template_file" "EC2_USER_DATA" {
     count = (length(var.INSs) > 0 ?
             length(var.INSs) : 0)
 
+    vars {
+        NEW_USER_NAME=ops
+        NEW_USER_PW=qwe123
+    }
+
     template = <<-EOF
     ${try(var.INS_UDs.PRE_SCRIPT[count.index], "")}
     ${try(join("\n", [for FILE in var.INS_UDs.FILEs[count.index] : file("${FILE}")]), "")}
