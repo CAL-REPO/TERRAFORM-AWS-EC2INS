@@ -66,7 +66,7 @@ data "template_file" "EC2_USER_DATA" {
     count = (length(var.INSs) > 0 ?
             length(var.INSs) : 0)
 
-    vars {
+    vars = {
         NEW_USER_NAME="ops"
         NEW_USER_PW="qwe123"
     }
