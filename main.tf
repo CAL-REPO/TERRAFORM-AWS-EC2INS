@@ -44,7 +44,12 @@ resource "aws_instance" "INS" {
         }
     }
 
-    user_data = data.template_file.EC2_USER_DATA[count.index].rendered
+    user_data = <<EOF
+    #!/bin/bash
+    ${try(var.INS_UDs.PRE_SCRIPT[count.index], "")}
+    "${data.template_file.EC2_USER_DATA[count.index].rendered}"
+    ${try(var.INS_UDs.SCRIPT[count.index], "")}
+    EOF
     user_data_replace_on_change = true
 
 }
@@ -66,12 +71,9 @@ resource "aws_network_interface" "DEFAULT_NIC" {
 data "template_file" "EC2_USER_DATA" {
     count = (length(var.INSs) > 0 ?
             length(var.INSs) : 0)
-            
+
     template = <<-EOF
-    #!/bin/bash
-    ${try(var.INS_UDs.PRE_SCRIPT[count.index], "")}
     ${try(join("\n", [for FILE in var.INS_UDs.FILEs[count.index] : file("${FILE}")]), "")}
-    ${try(var.INS_UDs.SCRIPT[count.index], "")}
     EOF
 }
 
