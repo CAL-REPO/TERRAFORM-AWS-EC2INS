@@ -25,13 +25,13 @@ variable "INS_UDs" {
     type = object({
         PRE_SCRIPT = optional(list(string))
         FILEs = optional(list(list(string)))
-        SCRIPT = optional(list(string))
+        POST_SCRIPT = optional(list(string))
     })
 
     default = {
         PRE_SCRIPT = []
         FILEs = []
-        SCRIPT = []
+        POST_SCRIPT = []
     }
 }
 

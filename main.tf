@@ -70,7 +70,7 @@ data "template_file" "EC2_USER_DATA" {
     #!/bin/bash
     ${try(var.INS_UDs.PRE_SCRIPT[count.index], "")}
     ${try(join("\n", [for FILE in var.INS_UDs.FILEs[count.index] : file("${FILE}")]), "")}
-    ${try(var.INS_UDs.SCRIPT[count.index], "")}
+    ${try(var.INS_UDs.POST_SCRIPT[count.index], "")}
     EOF
 }
 
